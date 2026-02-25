@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
 <meta name="x-ogp-key" content="YOUR_API_KEY"/>
 <title>Epstein Island</title>
-<script src="https://sdk.play.fun"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://sdk.play.fun" async onerror="window.OpenGameSDK=function(){this.on=()=>{};this.init=()=>{};this.addPoints=()=>{};this.endGame=()=>Promise.resolve()}"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#1a2e1a}
@@ -81,32 +81,40 @@ const _gameId = _p.get('gameId') || 'YOUR_GAME_ID';
 
 let ogp = null, sdkReady = false, vibes = 0, gameOn = false;
 
-try {
-  ogp = new OpenGameSDK({
-    ui: { usePointsWidget: true, theme: 'dark' },
-    logLevel: 'warn'
-  });
+function initSDK() {
+  if (typeof OpenGameSDK === 'undefined') {
+    console.warn('[SDK] not available, standalone mode');
+    return;
+  }
+  try {
+    ogp = new OpenGameSDK({
+      ui: { usePointsWidget: true, theme: 'dark' },
+      logLevel: 'warn'
+    });
 
-  ogp.on('OnReady', () => {
-    sdkReady = true;
-    console.log('[SDK] ready');
-  });
+    ogp.on('OnReady', () => {
+      sdkReady = true;
+      console.log('[SDK] ready');
+    });
 
-  ogp.on('SessionStarted', () => console.log('[SDK] session started'));
+    ogp.on('SessionStarted', () => console.log('[SDK] session started'));
 
-  ogp.on('LoginSuccess', () => console.log('[SDK] logged in:', ogp.playerId));
+    ogp.on('LoginSuccess', () => console.log('[SDK] logged in:', ogp.playerId));
 
-  ogp.on('SavePointsSuccess', () => console.log('[SDK] points saved'));
+    ogp.on('SavePointsSuccess', () => console.log('[SDK] points saved'));
 
-  ogp.on('SavePointsFailed', () => {
-    console.warn('[SDK] save failed — retry');
-    setTimeout(() => { try { ogp.endGame(); } catch(e){} }, 3000);
-  });
+    ogp.on('SavePointsFailed', () => {
+      console.warn('[SDK] save failed — retry');
+      setTimeout(() => { try { ogp.endGame(); } catch(e){} }, 3000);
+    });
 
-  ogp.init({ gameId: _gameId });
-} catch(e) {
-  console.warn('[SDK] standalone:', e.message);
+    ogp.init({ gameId: _gameId });
+  } catch(e) {
+    console.warn('[SDK] init error:', e.message);
+  }
 }
+
+setTimeout(initSDK, 100);
 
 function addVibes(n) {
   vibes += n;
