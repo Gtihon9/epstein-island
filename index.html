@@ -228,17 +228,11 @@ ocean.position.y = -2;
 ocean.receiveShadow = true;
 S.add(ocean);
 
-S.add(new THREE.Mesh(
-  new THREE.PlaneGeometry(400,400),
-  new THREE.MeshBasicMaterial({ color: 0x0c4060 })
-).rotateX(-Math.PI/2) || (() => {
-  const m = new THREE.Mesh(new THREE.PlaneGeometry(400,400), new THREE.MeshBasicMaterial({color:0x0c4060}));
-  m.rotation.x = -Math.PI/2; m.position.y = -4; S.add(m);
-})());
-
 // deep floor
 const df = new THREE.Mesh(new THREE.PlaneGeometry(400,400), new THREE.MeshBasicMaterial({color:0x0c4060}));
-df.rotation.x = -Math.PI/2; df.position.y = -4; S.add(df);
+df.rotation.x = -Math.PI/2; 
+df.position.y = -4; 
+S.add(df);
 
 function animOcean(t) {
   const p = oGeo.attributes.position;
@@ -519,16 +513,21 @@ function mkTemple(x, z) {
   const g = new THREE.Group(), y = hgt(x,z);
 
   // base
-  g.add(Object.assign(new THREE.Mesh(
+  const base = new THREE.Mesh(
     new THREE.CylinderGeometry(3, 3.5, 0.7, 8),
     new THREE.MeshLambertMaterial({color:0xF5F5F0})
-  ), {position: new THREE.Vector3(0, 0.35, 0), castShadow: true}));
+  );
+  base.position.set(0, 0.35, 0);
+  base.castShadow = true;
+  g.add(base);
 
   // second tier
-  g.add(Object.assign(new THREE.Mesh(
+  const tier2 = new THREE.Mesh(
     new THREE.CylinderGeometry(2.4, 2.7, 0.35, 8),
     new THREE.MeshLambertMaterial({color:0xEEEAE0})
-  ), {position: new THREE.Vector3(0, 0.88, 0)}));
+  );
+  tier2.position.set(0, 0.88, 0);
+  g.add(tier2);
 
   // columns
   for (let i = 0; i < 8; i++) {
