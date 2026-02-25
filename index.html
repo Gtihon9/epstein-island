@@ -704,48 +704,172 @@ function mkJeff() {
   body.position.y = 0.88; body.castShadow = true;
   jeff.add(body);
 
-  // head
+  // head with face texture
+  const faceCv = document.createElement('canvas');
+  faceCv.width = 128; faceCv.height = 128;
+  const fCtx = faceCv.getContext('2d');
+  
+  // skin base
+  fCtx.fillStyle = '#D4A574';
+  fCtx.fillRect(0, 0, 128, 128);
+  
+  // face features - stylized Epstein
+  // forehead wrinkles
+  fCtx.strokeStyle = '#C89B7B';
+  fCtx.lineWidth = 1;
+  for (let i = 0; i < 3; i++) {
+    fCtx.beginPath();
+    fCtx.moveTo(35, 25 + i*6);
+    fCtx.quadraticCurveTo(64, 22 + i*6, 93, 25 + i*6);
+    fCtx.stroke();
+  }
+  
+  // eyebrows (thick, dark)
+  fCtx.fillStyle = '#1a1a1a';
+  fCtx.beginPath();
+  fCtx.ellipse(45, 48, 12, 3, -0.1, 0, Math.PI*2);
+  fCtx.fill();
+  fCtx.beginPath();
+  fCtx.ellipse(83, 48, 12, 3, 0.1, 0, Math.PI*2);
+  fCtx.fill();
+  
+  // eyes
+  fCtx.fillStyle = '#fff';
+  fCtx.beginPath();
+  fCtx.ellipse(45, 56, 8, 5, 0, 0, Math.PI*2);
+  fCtx.fill();
+  fCtx.beginPath();
+  fCtx.ellipse(83, 56, 8, 5, 0, 0, Math.PI*2);
+  fCtx.fill();
+  
+  // pupils (dark, beady)
+  fCtx.fillStyle = '#1a1a1a';
+  fCtx.beginPath();
+  fCtx.arc(45, 56, 4, 0, Math.PI*2);
+  fCtx.fill();
+  fCtx.beginPath();
+  fCtx.arc(83, 56, 4, 0, Math.PI*2);
+  fCtx.fill();
+  
+  // bags under eyes
+  fCtx.strokeStyle = '#B8956A';
+  fCtx.lineWidth = 2;
+  fCtx.beginPath();
+  fCtx.arc(45, 62, 6, 0.2, Math.PI-0.2);
+  fCtx.stroke();
+  fCtx.beginPath();
+  fCtx.arc(83, 62, 6, 0.2, Math.PI-0.2);
+  fCtx.stroke();
+  
+  // nose (prominent)
+  fCtx.fillStyle = '#C89B7B';
+  fCtx.beginPath();
+  fCtx.moveTo(64, 50);
+  fCtx.lineTo(58, 78);
+  fCtx.quadraticCurveTo(64, 82, 70, 78);
+  fCtx.lineTo(64, 50);
+  fCtx.fill();
+  fCtx.strokeStyle = '#B8956A';
+  fCtx.lineWidth = 1;
+  fCtx.stroke();
+  
+  // nostrils
+  fCtx.fillStyle = '#8B7355';
+  fCtx.beginPath();
+  fCtx.ellipse(60, 77, 3, 2, 0, 0, Math.PI*2);
+  fCtx.fill();
+  fCtx.beginPath();
+  fCtx.ellipse(68, 77, 3, 2, 0, 0, Math.PI*2);
+  fCtx.fill();
+  
+  // smirk (creepy smile)
+  fCtx.strokeStyle = '#8B5A5A';
+  fCtx.lineWidth = 2;
+  fCtx.beginPath();
+  fCtx.moveTo(42, 92);
+  fCtx.quadraticCurveTo(64, 102, 86, 92);
+  fCtx.stroke();
+  
+  // teeth hint
+  fCtx.fillStyle = '#f5f5f0';
+  fCtx.fillRect(52, 93, 24, 5);
+  fCtx.strokeStyle = '#ddd';
+  fCtx.lineWidth = 0.5;
+  for (let i = 0; i < 6; i++) {
+    fCtx.beginPath();
+    fCtx.moveTo(54 + i*4, 93);
+    fCtx.lineTo(54 + i*4, 98);
+    fCtx.stroke();
+  }
+  
+  // chin
+  fCtx.fillStyle = '#C89B7B';
+  fCtx.beginPath();
+  fCtx.ellipse(64, 110, 18, 12, 0, 0, Math.PI);
+  fCtx.fill();
+  
+  // 5 o'clock shadow
+  fCtx.fillStyle = 'rgba(50,50,50,0.15)';
+  fCtx.beginPath();
+  fCtx.ellipse(64, 105, 22, 18, 0, 0.3, Math.PI-0.3);
+  fCtx.fill();
+  
+  const faceTex = new THREE.CanvasTexture(faceCv);
+  
   const head = new THREE.Mesh(
-    new THREE.SphereGeometry(0.24, 8, 8),
-    new THREE.MeshLambertMaterial({color:0xD4A574})
+    new THREE.SphereGeometry(0.24, 16, 16),
+    new THREE.MeshLambertMaterial({map: faceTex})
   );
   head.position.y = 1.58; head.castShadow = true;
+  head.rotation.y = Math.PI; // face forward
   jeff.add(head);
 
-  // hair
+  // hair (receding, dark)
   const hair = new THREE.Mesh(
-    new THREE.SphereGeometry(0.25, 8, 6, 0, Math.PI*2, 0, Math.PI*0.5),
-    new THREE.MeshLambertMaterial({color:0x2C2C2C})
+    new THREE.SphereGeometry(0.25, 8, 6, 0, Math.PI*2, 0, Math.PI*0.4),
+    new THREE.MeshLambertMaterial({color:0x1a1a1a})
   );
-  hair.position.y = 1.63;
+  hair.position.y = 1.65;
   jeff.add(hair);
+  
+  // side hair patches
+  for (let s = -1; s <= 1; s += 2) {
+    const sideHair = new THREE.Mesh(
+      new THREE.SphereGeometry(0.08, 6, 6),
+      new THREE.MeshLambertMaterial({color:0x1a1a1a})
+    );
+    sideHair.position.set(s*0.2, 1.55, -0.08);
+    sideHair.scale.set(1, 1.2, 0.8);
+    jeff.add(sideHair);
+  }
 
-  // nose
-  const nose = new THREE.Mesh(
-    new THREE.ConeGeometry(0.035, 0.07, 4),
-    new THREE.MeshLambertMaterial({color:0xC89B7B})
-  );
-  nose.rotation.x = Math.PI/2;
-  nose.position.set(0, 1.55, 0.24);
-  jeff.add(nose);
-
-  // ears
+  // ears (big)
   for (let s = -1; s <= 1; s += 2) {
     const ear = new THREE.Mesh(
-      new THREE.SphereGeometry(0.05, 5, 5),
+      new THREE.SphereGeometry(0.06, 5, 5),
       new THREE.MeshLambertMaterial({color:0xC89B7B})
     );
-    ear.position.set(s*0.23, 1.55, 0);
+    ear.position.set(s*0.24, 1.55, 0);
+    ear.scale.set(0.6, 1.2, 0.8);
     jeff.add(ear);
   }
 
-  // collar
+  // collar (polo shirt)
   const collar = new THREE.Mesh(
     new THREE.CylinderGeometry(0.2, 0.28, 0.08, 8),
     new THREE.MeshLambertMaterial({color:0xF5F5F5})
   );
   collar.position.y = 1.32;
   jeff.add(collar);
+  
+  // gold watch (billionaire flex)
+  const watch = new THREE.Mesh(
+    new THREE.TorusGeometry(0.04, 0.015, 6, 12),
+    new THREE.MeshLambertMaterial({color:0xFFD700})
+  );
+  watch.position.set(-0.33, 0.72, 0);
+  watch.rotation.y = Math.PI/2;
+  jeff.add(watch);
 
   // khaki shorts
   const shorts = new THREE.Mesh(
@@ -875,6 +999,300 @@ function mkBirds() {
 }
 
 // ================================================================
+//  EASTER EGGS — for crypto degens & those who know
+// ================================================================
+
+// Lolita Express airplane flying over
+let plane;
+function mkPlane() {
+  plane = new THREE.Group();
+  
+  // fuselage
+  const body = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 0.25, 3, 8),
+    new THREE.MeshLambertMaterial({color:0xf5f5f5})
+  );
+  body.rotation.z = Math.PI/2;
+  plane.add(body);
+  
+  // wings
+  const wing = new THREE.Mesh(
+    new THREE.BoxGeometry(0.1, 2.5, 0.6),
+    new THREE.MeshLambertMaterial({color:0xe0e0e0})
+  );
+  plane.add(wing);
+  
+  // tail
+  const tail = new THREE.Mesh(
+    new THREE.BoxGeometry(0.08, 0.8, 0.4),
+    new THREE.MeshLambertMaterial({color:0xe0e0e0})
+  );
+  tail.position.set(-1.3, 0.3, 0);
+  plane.add(tail);
+  
+  // N909JE tail number (his actual plane)
+  const numCv = document.createElement('canvas');
+  numCv.width = 64; numCv.height = 16;
+  const numCtx = numCv.getContext('2d');
+  numCtx.fillStyle = '#f5f5f5';
+  numCtx.fillRect(0,0,64,16);
+  numCtx.fillStyle = '#1a1a1a';
+  numCtx.font = 'bold 10px Arial';
+  numCtx.fillText('N909JE', 4, 12);
+  const numTex = new THREE.CanvasTexture(numCv);
+  const numMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.5, 0.12),
+    new THREE.MeshBasicMaterial({map: numTex, transparent: true})
+  );
+  numMesh.position.set(-1, 0.31, 0.01);
+  plane.add(numMesh);
+  
+  plane.position.set(-80, 35, -80);
+  plane.userData = {angle: 0};
+  S.add(plane);
+}
+
+function animPlane(t) {
+  if (!plane) return;
+  plane.userData.angle += 0.003;
+  const r = 70;
+  plane.position.x = Math.cos(plane.userData.angle) * r;
+  plane.position.z = Math.sin(plane.userData.angle) * r;
+  plane.rotation.y = -plane.userData.angle + Math.PI/2;
+}
+
+// Submarine underwater (escape theory)
+let submarine;
+function mkSubmarine() {
+  submarine = new THREE.Group();
+  
+  const hull = new THREE.Mesh(
+    new THREE.CapsuleGeometry ? 
+      new THREE.SphereGeometry(0.8, 8, 8) :
+      new THREE.SphereGeometry(0.8, 8, 8),
+    new THREE.MeshLambertMaterial({color:0x2a2a2a})
+  );
+  hull.scale.set(1, 0.6, 2.5);
+  submarine.add(hull);
+  
+  // periscope
+  const peri = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.05, 0.05, 1.5, 6),
+    new THREE.MeshLambertMaterial({color:0x1a1a1a})
+  );
+  peri.position.set(0, 0.8, 0);
+  submarine.add(peri);
+  
+  submarine.position.set(50, -3, 50);
+  submarine.userData = {angle: Math.PI};
+  S.add(submarine);
+}
+
+function animSubmarine(t) {
+  if (!submarine) return;
+  submarine.userData.angle += 0.001;
+  const r = 55;
+  submarine.position.x = Math.cos(submarine.userData.angle) * r;
+  submarine.position.z = Math.sin(submarine.userData.angle) * r;
+  submarine.position.y = -3 + Math.sin(t * 0.3) * 0.3;
+  submarine.rotation.y = -submarine.userData.angle;
+}
+
+// Security cameras that "malfunction"
+const cameras = [];
+function mkSecurityCameras() {
+  const spots = [[2, -3], [-8, -12], [14, -11], [-11, 6], [10, 9]];
+  spots.forEach(([x, z], i) => {
+    const g = new THREE.Group();
+    const y = hgt(x, z);
+    
+    // pole
+    const pole = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.05, 0.05, 2, 6),
+      new THREE.MeshLambertMaterial({color:0x444444})
+    );
+    pole.position.y = 1;
+    g.add(pole);
+    
+    // camera box
+    const cam = new THREE.Mesh(
+      new THREE.BoxGeometry(0.2, 0.15, 0.3),
+      new THREE.MeshLambertMaterial({color:0x222222})
+    );
+    cam.position.set(0, 2.1, 0.1);
+    g.add(cam);
+    
+    // red light (blinking = "malfunction")
+    const light = new THREE.Mesh(
+      new THREE.SphereGeometry(0.03, 6, 6),
+      new THREE.MeshBasicMaterial({color:0xff0000})
+    );
+    light.position.set(0, 2.15, 0.26);
+    light.userData = {phase: i * 1.5};
+    g.add(light);
+    
+    g.position.set(x, y, z);
+    S.add(g);
+    cameras.push(g);
+  });
+}
+
+function animCameras(t) {
+  cameras.forEach(c => {
+    const light = c.children[2];
+    if (light && light.material) {
+      // cameras "malfunction" - blink erratically
+      const blink = Math.sin(t * 3 + light.userData.phase) > 0.7;
+      light.material.color.setHex(blink ? 0xff0000 : 0x330000);
+    }
+  });
+}
+
+// Hidden message in the rocks
+function mkSecretRock() {
+  const x = -20, z = -20;
+  const y = hgt(x, z);
+  
+  // rock with hidden text
+  const cv = document.createElement('canvas');
+  cv.width = 128; cv.height = 64;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#3a3a38';
+  ctx.fillRect(0, 0, 128, 64);
+  ctx.fillStyle = '#2a2a28';
+  ctx.font = '8px Arial';
+  ctx.fillText('EPSTEIN', 35, 28);
+  ctx.fillText("DIDN'T KILL", 28, 38);
+  ctx.fillText('HIMSELF', 38, 48);
+  
+  const tex = new THREE.CanvasTexture(cv);
+  const rock = new THREE.Mesh(
+    new THREE.DodecahedronGeometry(1.8, 0),
+    new THREE.MeshLambertMaterial({map: tex})
+  );
+  rock.position.set(x, y + 0.8, z);
+  rock.rotation.set(0.3, 0.5, 0.2);
+  rock.castShadow = true;
+  S.add(rock);
+}
+
+// VIP silhouettes (shadowy figures)
+const vips = [];
+function mkVIPSilhouettes() {
+  // shadowy figures watching from different spots
+  const spots = [
+    {x: -15, z: -8, name: 'BC'},   // Bill C
+    {x: 16, z: 5, name: 'PA'},     // Prince A
+    {x: -8, z: 15, name: 'GM'},    // G Maxwell
+  ];
+  
+  spots.forEach(spot => {
+    const g = new THREE.Group();
+    const y = hgt(spot.x, spot.z);
+    
+    // dark silhouette body
+    const body = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.25, 0.22, 1.0, 6),
+      new THREE.MeshBasicMaterial({color:0x0a0a0a, transparent:true, opacity:0.7})
+    );
+    body.position.y = 0.5;
+    g.add(body);
+    
+    // head
+    const head = new THREE.Mesh(
+      new THREE.SphereGeometry(0.18, 6, 6),
+      new THREE.MeshBasicMaterial({color:0x0a0a0a, transparent:true, opacity:0.7})
+    );
+    head.position.y = 1.15;
+    g.add(head);
+    
+    g.position.set(spot.x, y, spot.z);
+    g.userData = {name: spot.name, phase: Math.random() * 6.28};
+    S.add(g);
+    vips.push(g);
+  });
+}
+
+function animVIPs(t) {
+  vips.forEach(v => {
+    // they slowly turn to watch Jeff
+    if (jeff) {
+      const dx = jeff.position.x - v.position.x;
+      const dz = jeff.position.z - v.position.z;
+      v.rotation.y = Math.atan2(dx, dz);
+    }
+    // subtle creepy sway
+    v.position.y = hgt(v.position.x, v.position.z) + Math.sin(t * 0.5 + v.userData.phase) * 0.05;
+  });
+}
+
+// SOL logo floating (for crypto degens)
+let solLogo;
+function mkSolLogo() {
+  const g = new THREE.Group();
+  
+  // SOL gradient circle
+  const cv = document.createElement('canvas');
+  cv.width = 64; cv.height = 64;
+  const ctx = cv.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 64, 64);
+  grad.addColorStop(0, '#9945FF');
+  grad.addColorStop(0.5, '#14F195');
+  grad.addColorStop(1, '#00C2FF');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(32, 32, 28, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 20px Arial';
+  ctx.fillText('◎', 22, 40);
+  
+  const tex = new THREE.CanvasTexture(cv);
+  const logo = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.5, 1.5),
+    new THREE.MeshBasicMaterial({map: tex, transparent: true, side: THREE.DoubleSide})
+  );
+  g.add(logo);
+  
+  g.position.set(0, 8, 0);
+  S.add(g);
+  solLogo = g;
+}
+
+function animSolLogo(t) {
+  if (!solLogo) return;
+  solLogo.position.y = 8 + Math.sin(t * 0.5) * 0.5;
+  solLogo.rotation.y = t * 0.3;
+  // orbit around island
+  const r = 25;
+  solLogo.position.x = Math.cos(t * 0.1) * r;
+  solLogo.position.z = Math.sin(t * 0.1) * r;
+}
+
+// Flight log book on dock
+function mkFlightLog() {
+  const cv = document.createElement('canvas');
+  cv.width = 64; cv.height = 32;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#8B4513';
+  ctx.fillRect(0, 0, 64, 32);
+  ctx.fillStyle = '#d4a574';
+  ctx.fillRect(4, 4, 56, 24);
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = '6px Arial';
+  ctx.fillText('FLIGHT LOG', 10, 14);
+  ctx.fillText('[REDACTED]', 12, 24);
+  
+  const tex = new THREE.CanvasTexture(cv);
+  const book = new THREE.Mesh(
+    new THREE.BoxGeometry(0.4, 0.05, 0.3),
+    new THREE.MeshLambertMaterial({map: tex})
+  );
+  book.position.set(0.5, 0.1, 38);
+  S.add(book);
+}
+
+// ================================================================
 //  CAMERA — low 3rd person follow like Capybara Sim
 // ================================================================
 let camA = 0;
@@ -928,12 +1346,21 @@ function build() {
   mkClouds();
   mkBirds();
   mkJeff();
+  
+  // Easter eggs
+  mkPlane();
+  mkSubmarine();
+  mkSecurityCameras();
+  mkSecretRock();
+  mkVIPSilhouettes();
+  mkSolLogo();
+  mkFlightLog();
 }
 
 // ================================================================
 //  LOADING
 // ================================================================
-const msgs = ['loading palm-trees...','planting flowers...','pouring ocean...','building temple...','parking boats...','releasing birds...','setting vibes...','almost ready...'];
+const msgs = ['loading palm-trees...','planting flowers...','pouring ocean...','building temple...','parking lolita express...','disabling cameras...','redacting flight logs...','inviting VIPs...','setting vibes...','wagmi...'];
 let pct = 0, mi = 0;
 
 function runLoad() {
@@ -1001,6 +1428,13 @@ function loop() {
       }
     });
   });
+
+  // Easter egg animations
+  animPlane(t);
+  animSubmarine(t);
+  animCameras(t);
+  animVIPs(t);
+  animSolLogo(t);
 
   R.render(S, cam);
 }
