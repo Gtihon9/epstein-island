@@ -2472,6 +2472,26 @@ function mk322() {
   S.add(num);
 }
 
+// JEF Logo (diamond monogram)
+let jefLogo;
+function mkJEFLogo() {
+  const loader = new THREE.TextureLoader();
+  loader.load('textures/jef-logo.png', (tex) => {
+    jefLogo = new THREE.Mesh(
+      new THREE.PlaneGeometry(3, 3),
+      new THREE.MeshBasicMaterial({map: tex, transparent: true, side: THREE.DoubleSide})
+    );
+    jefLogo.position.set(0, 12, 0);
+    S.add(jefLogo);
+  });
+}
+
+function animJEFLogo(t) {
+  if (!jefLogo) return;
+  jefLogo.position.y = 12 + Math.sin(t * 0.25) * 1;
+  jefLogo.rotation.y = t * 0.15;
+}
+
 // Rocket (to the moon!)
 let rocket;
 function mkRocket() {
@@ -2633,6 +2653,7 @@ function build() {
   mkSkullBones();
   mk322();
   mkRocket();
+  mkJEFLogo();
 }
 
 // ================================================================
@@ -2720,6 +2741,7 @@ function loop() {
   animWagmi(t);
   animDiamondHands(t);
   animRocket(t);
+  animJEFLogo(t);
 
   R.render(S, cam);
 }
