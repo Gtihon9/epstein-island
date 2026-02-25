@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="160" viewBox="0 0 96 160">
+  <rect width="96" height="160" fill="#f5f5dc"/>
+  <text x="48" y="18" font-family="Arial" font-size="12" font-weight="bold" fill="#1a1a1a" text-anchor="middle">WITNESSES</text>
+  <line x1="10" y1="25" x2="86" y2="25" stroke="#1a1a1a" stroke-width="1"/>
+  
+  <!-- Names with strikethrough -->
+  <g font-family="Courier" font-size="10" fill="#666">
+    <text x="15" y="45">J. DOE</text>
+    <line x1="10" y1="42" x2="70" y2="42" stroke="#c41e3a" stroke-width="2"/>
+    
+    <text x="15" y="65">REDACTED</text>
+    <line x1="10" y1="62" x2="80" y2="62" stroke="#c41e3a" stroke-width="2"/>
+    
+    <text x="15" y="85">UNKNOWN</text>
+    <line x1="10" y1="82" x2="75" y2="82" stroke="#c41e3a" stroke-width="2"/>
+    
+    <text x="15" y="105">SEALED</text>
+    <line x1="10" y1="102" x2="65" y2="102" stroke="#c41e3a" stroke-width="2"/>
+    
+    <text x="15" y="125">?????</text>
+    <line x1="10" y1="122" x2="55" y2="122" stroke="#c41e3a" stroke-width="2"/>
+    
+    <text x="15" y="145">[CLASSIFIED]</text>
+    <line x1="10" y1="142" x2="86" y2="142" stroke="#c41e3a" stroke-width="2"/>
+  </g>
+</svg>

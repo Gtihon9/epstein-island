@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Texture Generator</title>
+<style>
+body { background: #1a1a1a; color: #fff; font-family: monospace; padding: 20px; }
+canvas { border: 1px solid #333; margin: 10px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+h3 { margin-top: 20px; }
+a { color: #4CAF50; }
+</style>
+</head>
+<body>
+<h1>Epstein Island Textures</h1>
+<p>Right-click → Save Image As to download each texture</p>
+
+<h3>Epstein Face (256x256)</h3>
+<div class="row">
+<canvas id="face" width="256" height="256"></canvas>
+</div>
+
+<h3>Environment</h3>
+<div class="row">
+<canvas id="grass" width="256" height="256"></canvas>
+<canvas id="sand" width="256" height="256"></canvas>
+<canvas id="water" width="256" height="256"></canvas>
+<canvas id="wood" width="256" height="256"></canvas>
+<canvas id="stone" width="256" height="256"></canvas>
+</div>
+
+<h3>Props</h3>
+<div class="row">
+<canvas id="dollar" width="128" height="128"></canvas>
+<canvas id="fbi" width="128" height="64"></canvas>
+<canvas id="newspaper" width="128" height="96"></canvas>
+<canvas id="flightlog" width="128" height="64"></canvas>
+<canvas id="qr" width="128" height="128"></canvas>
+<canvas id="sol" width="128" height="128"></canvas>
+</div>
+
+<script>
+// ============ EPSTEIN FACE ============
+(function() {
+  const cv = document.getElementById('face');
+  const ctx = cv.getContext('2d');
+  const w = 256, h = 256;
+  
+  // skin base
+  ctx.fillStyle = '#D4A574';
+  ctx.fillRect(0, 0, w, h);
+  
+  // skin texture noise
+  for (let i = 0; i < 500; i++) {
+    ctx.fillStyle = `rgba(${180 + Math.random()*30}, ${140 + Math.random()*30}, ${100 + Math.random()*20}, 0.1)`;
+    ctx.beginPath();
+    ctx.arc(Math.random()*w, Math.random()*h, Math.random()*3, 0, Math.PI*2);
+    ctx.fill();
+  }
+  
+  // forehead wrinkles
+  ctx.strokeStyle = '#C89B7B';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(70, 50 + i*12);
+    ctx.quadraticCurveTo(128, 45 + i*12, 186, 50 + i*12);
+    ctx.stroke();
+  }
+  
+  // eyebrows (thick, dark, bushy)
+  ctx.fillStyle = '#1a1a1a';
+  ctx.beginPath();
+  ctx.ellipse(90, 95, 28, 8, -0.15, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(166, 95, 28, 8, 0.15, 0, Math.PI*2);
+  ctx.fill();
+  
+  // eyebrow hair texture
+  ctx.strokeStyle = '#0a0a0a';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 30; i++) {
+    ctx.beginPath();
+    ctx.moveTo(65 + i*2, 98);
+    ctx.lineTo(68 + i*2, 88 + Math.random()*4);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(140 + i*2, 98);
+    ctx.lineTo(143 + i*2, 88 + Math.random()*4);
+    ctx.stroke();
+  }
+  
+  // eye sockets (shadow)
+  ctx.fillStyle = 'rgba(100, 70, 50, 0.3)';
+  ctx.beginPath();
+  ctx.ellipse(90, 115, 22, 14, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(166, 115, 22, 14, 0, 0, Math.PI*2);
+  ctx.fill();
+  
+  // eyes white
+  ctx.fillStyle = '#f5f5f0';
+  ctx.beginPath();
+  ctx.ellipse(90, 115, 16, 10, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(166, 115, 16, 10, 0, 0, Math.PI*2);
+  ctx.fill();
+  
+  // iris
+  ctx.fillStyle = '#4a3728';
+  ctx.beginPath();
+  ctx.arc(90, 115, 8, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(166, 115, 8, 0, Math.PI*2);
+  ctx.fill();
+  
+  // pupils (dark, beady)
+  ctx.fillStyle = '#0a0a0a';
+  ctx.beginPath();
+  ctx.arc(90, 115, 4, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(166, 115, 4, 0, Math.PI*2);
+  ctx.fill();
+  
+  // eye highlight
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.arc(93, 112, 2, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(169, 112, 2, 0, Math.PI*2);
+  ctx.fill();
+  
+  // bags under eyes
+  ctx.strokeStyle = '#B8956A';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(90, 125, 14, 0.3, Math.PI-0.3);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(166, 125, 14, 0.3, Math.PI-0.3);
+  ctx.stroke();
+  
+  // crow's feet
+  ctx.strokeStyle = '#C89B7B';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(60, 110 + i*6);
+    ctx.lineTo(50, 105 + i*8);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(196, 110 + i*6);
+    ctx.lineTo(206, 105 + i*8);
+    ctx.stroke();
+  }
+  
+  // nose (prominent, hooked)
+  const noseGrad = ctx.createLinearGradient(110, 100, 146, 100);
+  noseGrad.addColorStop(0, '#C89B7B');
+  noseGrad.addColorStop(0.5, '#D4A574');
+  noseGrad.addColorStop(1, '#C89B7B');
+  ctx.fillStyle = noseGrad;
+  ctx.beginPath();
+  ctx.moveTo(128, 100);
+  ctx.quadraticCurveTo(135, 130, 128, 155);
+  ctx.quadraticCurveTo(145, 165, 148, 158);
+  ctx.quadraticCurveTo(140, 150, 138, 100);
+  ctx.closePath();
+  ctx.fill();
+  
+  // nose shadow
+  ctx.strokeStyle = '#B8956A';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(128, 105);
+  ctx.quadraticCurveTo(132, 135, 128, 155);
+  ctx.stroke();
+  
+  // nostrils
+  ctx.fillStyle = '#6D4C2F';
+  ctx.beginPath();
+  ctx.ellipse(118, 158, 7, 5, 0.3, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(138, 158, 7, 5, -0.3, 0, Math.PI*2);
+  ctx.fill();
+  
+  // nasolabial folds
+  ctx.strokeStyle = '#C89B7B';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(105, 145);
+  ctx.quadraticCurveTo(95, 170, 100, 195);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(151, 145);
+  ctx.quadraticCurveTo(161, 170, 156, 195);
+  ctx.stroke();
+  
+  // smirk (creepy asymmetric smile)
+  ctx.strokeStyle = '#8B5A5A';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(85, 188);
+  ctx.quadraticCurveTo(128, 205, 175, 185);
+  ctx.stroke();
+  
+  // upper lip
+  ctx.fillStyle = '#C08070';
+  ctx.beginPath();
+  ctx.moveTo(95, 185);
+  ctx.quadraticCurveTo(128, 178, 161, 185);
+  ctx.quadraticCurveTo(128, 192, 95, 185);
+  ctx.fill();
+  
+  // teeth
+  ctx.fillStyle = '#f5f5e8';
+  ctx.fillRect(103, 190, 50, 12);
+  ctx.strokeStyle = '#ddd';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 7; i++) {
+    ctx.beginPath();
+    ctx.moveTo(107 + i*7, 190);
+    ctx.lineTo(107 + i*7, 202);
+    ctx.stroke();
+  }
+  
+  // lower lip
+  ctx.fillStyle = '#C08070';
+  ctx.beginPath();
+  ctx.moveTo(98, 202);
+  ctx.quadraticCurveTo(128, 215, 158, 202);
+  ctx.quadraticCurveTo(128, 208, 98, 202);
+  ctx.fill();
+  
+  // chin
+  ctx.fillStyle = '#C89B7B';
+  ctx.beginPath();
+  ctx.ellipse(128, 235, 35, 25, 0, 0, Math.PI);
+  ctx.fill();
+  
+  // 5 o'clock shadow / stubble
+  ctx.fillStyle = 'rgba(40,40,40,0.15)';
+  ctx.beginPath();
+  ctx.ellipse(128, 220, 45, 40, 0, 0.2, Math.PI-0.2);
+  ctx.fill();
+  
+  // stubble dots
+  ctx.fillStyle = 'rgba(30,30,30,0.3)';
+  for (let i = 0; i < 200; i++) {
+    const x = 80 + Math.random()*96;
+    const y = 200 + Math.random()*50;
+    if (y > 205 || x < 100 || x > 156) {
+      ctx.beginPath();
+      ctx.arc(x, y, 0.5 + Math.random(), 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+  
+  // ears
+  ctx.fillStyle = '#D4A574';
+  ctx.beginPath();
+  ctx.ellipse(35, 130, 15, 25, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(221, 130, 15, 25, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.strokeStyle = '#C89B7B';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(35, 130, 8, 0.5, Math.PI*1.5);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(221, 130, 8, Math.PI*1.5, Math.PI*0.5);
+  ctx.stroke();
+})();
+
+// ============ GRASS ============
+(function() {
+  const cv = document.getElementById('grass');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#4a7c3f';
+  ctx.fillRect(0, 0, 256, 256);
+  
+  for (let i = 0; i < 2000; i++) {
+    const x = Math.random() * 256;
+    const y = Math.random() * 256;
+    const h = 5 + Math.random() * 15;
+    ctx.strokeStyle = `rgb(${60 + Math.random()*40}, ${100 + Math.random()*60}, ${50 + Math.random()*30})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.quadraticCurveTo(x + (Math.random()-0.5)*5, y - h/2, x + (Math.random()-0.5)*3, y - h);
+    ctx.stroke();
+  }
+})();
+
+// ============ SAND ============
+(function() {
+  const cv = document.getElementById('sand');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#e8d4a8';
+  ctx.fillRect(0, 0, 256, 256);
+  
+  for (let i = 0; i < 3000; i++) {
+    ctx.fillStyle = `rgba(${200 + Math.random()*55}, ${180 + Math.random()*50}, ${140 + Math.random()*40}, ${0.3 + Math.random()*0.4})`;
+    ctx.beginPath();
+    ctx.arc(Math.random()*256, Math.random()*256, Math.random()*2, 0, Math.PI*2);
+    ctx.fill();
+  }
+})();
+
+// ============ WATER ============
+(function() {
+  const cv = document.getElementById('water');
+  const ctx = cv.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 256, 256);
+  grad.addColorStop(0, '#1e5799');
+  grad.addColorStop(0.5, '#2989d8');
+  grad.addColorStop(1, '#1e5799');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 256, 256);
+  
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 20; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, i * 15 + Math.random()*10);
+    for (let x = 0; x < 256; x += 20) {
+      ctx.quadraticCurveTo(x + 10, i*15 + Math.sin(x*0.05)*8, x + 20, i*15);
+    }
+    ctx.stroke();
+  }
+})();
+
+// ============ WOOD ============
+(function() {
+  const cv = document.getElementById('wood');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#8B4513';
+  ctx.fillRect(0, 0, 256, 256);
+  
+  ctx.strokeStyle = '#6D3610';
+  ctx.lineWidth = 3;
+  for (let i = 0; i < 30; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, i * 10 + Math.random()*5);
+    ctx.lineTo(256, i * 10 + Math.random()*5);
+    ctx.stroke();
+  }
+  
+  for (let i = 0; i < 10; i++) {
+    ctx.fillStyle = '#5D2906';
+    ctx.beginPath();
+    ctx.ellipse(Math.random()*256, Math.random()*256, 3 + Math.random()*5, 8 + Math.random()*10, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
+})();
+
+// ============ STONE ============
+(function() {
+  const cv = document.getElementById('stone');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#6B6B6B';
+  ctx.fillRect(0, 0, 256, 256);
+  
+  for (let i = 0; i < 500; i++) {
+    ctx.fillStyle = `rgba(${80 + Math.random()*80}, ${80 + Math.random()*80}, ${80 + Math.random()*80}, 0.5)`;
+    ctx.beginPath();
+    ctx.arc(Math.random()*256, Math.random()*256, 2 + Math.random()*8, 0, Math.PI*2);
+    ctx.fill();
+  }
+  
+  ctx.strokeStyle = '#4a4a4a';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 15; i++) {
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*256, Math.random()*256);
+    ctx.lineTo(Math.random()*256, Math.random()*256);
+    ctx.stroke();
+  }
+})();
+
+// ============ DOLLAR ============
+(function() {
+  const cv = document.getElementById('dollar');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#228B22';
+  ctx.fillRect(0, 0, 128, 128);
+  
+  ctx.strokeStyle = '#1a6b1a';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(8, 8, 112, 112);
+  ctx.strokeRect(16, 16, 96, 96);
+  
+  ctx.fillStyle = '#f5f5dc';
+  ctx.beginPath();
+  ctx.arc(64, 64, 35, 0, Math.PI*2);
+  ctx.fill();
+  
+  ctx.fillStyle = '#228B22';
+  ctx.font = 'bold 50px serif';
+  ctx.fillText('$', 42, 82);
+  
+  ctx.fillStyle = '#1a6b1a';
+  ctx.font = '10px Arial';
+  ctx.fillText('FEDERAL RESERVE', 22, 120);
+})();
+
+// ============ FBI ============
+(function() {
+  const cv = document.getElementById('fbi');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(0, 0, 128, 64);
+  
+  ctx.fillStyle = '#FFD700';
+  ctx.font = 'bold 36px Arial';
+  ctx.fillText('FBI', 30, 45);
+  
+  ctx.fillStyle = '#fff';
+  ctx.font = '8px Arial';
+  ctx.fillText('FEDERAL BUREAU OF', 25, 58);
+})();
+
+// ============ NEWSPAPER ============
+(function() {
+  const cv = document.getElementById('newspaper');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#f5f5dc';
+  ctx.fillRect(0, 0, 128, 96);
+  
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold 12px Times New Roman';
+  ctx.fillText('THE DAILY TRUTH', 15, 15);
+  
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(10, 20);
+  ctx.lineTo(118, 20);
+  ctx.stroke();
+  
+  ctx.font = 'bold 14px Times New Roman';
+  ctx.fillText('CAMERAS FAILED', 12, 38);
+  ctx.fillText('GUARDS ASLEEP', 14, 55);
+  
+  ctx.font = '8px Arial';
+  ctx.fillStyle = '#666';
+  ctx.fillText('Sources say footage', 10, 70);
+  ctx.fillText('mysteriously deleted', 10, 80);
+  ctx.fillText('[REDACTED]', 10, 90);
+})();
+
+// ============ FLIGHT LOG ============
+(function() {
+  const cv = document.getElementById('flightlog');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#8B4513';
+  ctx.fillRect(0, 0, 128, 64);
+  ctx.fillStyle = '#d4a574';
+  ctx.fillRect(8, 8, 112, 48);
+  
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold 12px Courier';
+  ctx.fillText('FLIGHT LOG', 25, 25);
+  ctx.font = '10px Courier';
+  ctx.fillText('N909JE', 42, 40);
+  ctx.fillStyle = '#c41e3a';
+  ctx.font = 'bold 10px Arial';
+  ctx.fillText('[REDACTED]', 35, 52);
+})();
+
+// ============ QR CODE ============
+(function() {
+  const cv = document.getElementById('qr');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, 128, 128);
+  ctx.fillStyle = '#000';
+  
+  // QR pattern
+  for (let i = 0; i < 16; i++) {
+    for (let j = 0; j < 16; j++) {
+      if (Math.random() > 0.5) {
+        ctx.fillRect(8 + i*7, 8 + j*7, 6, 6);
+      }
+    }
+  }
+  
+  // corners
+  const drawCorner = (x, y) => {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(x, y, 21, 21);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(x+3, y+3, 15, 15);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(x+6, y+6, 9, 9);
+  };
+  drawCorner(8, 8);
+  drawCorner(99, 8);
+  drawCorner(8, 99);
+  
+  ctx.fillStyle = '#9945FF';
+  ctx.font = '8px Arial';
+  ctx.fillText('SOL WALLET', 35, 125);
+})();
+
+// ============ SOL LOGO ============
+(function() {
+  const cv = document.getElementById('sol');
+  const ctx = cv.getContext('2d');
+  
+  const grad = ctx.createLinearGradient(0, 0, 128, 128);
+  grad.addColorStop(0, '#9945FF');
+  grad.addColorStop(0.5, '#14F195');
+  grad.addColorStop(1, '#00C2FF');
+  
+  ctx.beginPath();
+  ctx.arc(64, 64, 56, 0, Math.PI*2);
+  ctx.fillStyle = grad;
+  ctx.fill();
+  
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 60px Arial';
+  ctx.fillText('◎', 30, 85);
+})();
+</script>
+</body>
+</html>

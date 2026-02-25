@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="128" viewBox="0 0 96 128">
+  <!-- Frame -->
+  <rect width="96" height="128" fill="#8B4513"/>
+  <rect x="8" y="8" width="80" height="96" fill="#4169E1"/>
+  
+  <!-- Abstract figure in dress -->
+  <ellipse cx="48" cy="40" rx="15" ry="18" fill="#f5deb3"/>
+  <path d="M30,55 L48,100 L66,55 Z" fill="#c41e3a"/>
+  <circle cx="43" cy="38" r="2" fill="#333"/>
+  <circle cx="53" cy="38" r="2" fill="#333"/>
+  <path d="M43,48 Q48,52 53,48" stroke="#333" stroke-width="1" fill="none"/>
+  
+  <!-- Label -->
+  <rect x="8" y="108" width="80" height="16" fill="#f5f5dc"/>
+  <text x="48" y="120" font-family="Arial" font-size="8" fill="#1a1a1a" text-anchor="middle">BILL IN BLUE DRESS</text>
+</svg>

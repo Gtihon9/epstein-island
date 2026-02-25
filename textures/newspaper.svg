@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="96" viewBox="0 0 128 96">
+  <rect width="128" height="96" fill="#f5f5dc"/>
+  <text x="64" y="15" font-family="Times New Roman" font-size="12" font-weight="bold" fill="#1a1a1a" text-anchor="middle">THE DAILY TRUTH</text>
+  <line x1="10" y1="20" x2="118" y2="20" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="64" y="38" font-family="Times New Roman" font-size="14" font-weight="bold" fill="#1a1a1a" text-anchor="middle">CAMERAS FAILED</text>
+  <text x="64" y="55" font-family="Times New Roman" font-size="14" font-weight="bold" fill="#1a1a1a" text-anchor="middle">GUARDS ASLEEP</text>
+  <text x="10" y="70" font-family="Arial" font-size="8" fill="#666">Sources say footage</text>
+  <text x="10" y="80" font-family="Arial" font-size="8" fill="#666">mysteriously deleted</text>
+  <text x="10" y="90" font-family="Arial" font-size="8" fill="#c41e3a">[REDACTED]</text>
+</svg>

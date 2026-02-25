@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Skin base -->
+  <rect width="256" height="256" fill="#D4A574"/>
+  
+  <!-- Forehead wrinkles -->
+  <g stroke="#C89B7B" stroke-width="2" fill="none">
+    <path d="M70,50 Q128,45 186,50"/>
+    <path d="M70,62 Q128,57 186,62"/>
+    <path d="M70,74 Q128,69 186,74"/>
+  </g>
+  
+  <!-- Eyebrows -->
+  <ellipse cx="90" cy="95" rx="28" ry="8" fill="#1a1a1a" transform="rotate(-8 90 95)"/>
+  <ellipse cx="166" cy="95" rx="28" ry="8" fill="#1a1a1a" transform="rotate(8 166 95)"/>
+  
+  <!-- Eye sockets shadow -->
+  <ellipse cx="90" cy="115" rx="22" ry="14" fill="rgba(100,70,50,0.3)"/>
+  <ellipse cx="166" cy="115" rx="22" ry="14" fill="rgba(100,70,50,0.3)"/>
+  
+  <!-- Eyes white -->
+  <ellipse cx="90" cy="115" rx="16" ry="10" fill="#f5f5f0"/>
+  <ellipse cx="166" cy="115" rx="16" ry="10" fill="#f5f5f0"/>
+  
+  <!-- Iris -->
+  <circle cx="90" cy="115" r="8" fill="#4a3728"/>
+  <circle cx="166" cy="115" r="8" fill="#4a3728"/>
+  
+  <!-- Pupils -->
+  <circle cx="90" cy="115" r="4" fill="#0a0a0a"/>
+  <circle cx="166" cy="115" r="4" fill="#0a0a0a"/>
+  
+  <!-- Eye highlights -->
+  <circle cx="93" cy="112" r="2" fill="#fff"/>
+  <circle cx="169" cy="112" r="2" fill="#fff"/>
+  
+  <!-- Bags under eyes -->
+  <path d="M76,125 Q90,140 104,125" stroke="#B8956A" stroke-width="3" fill="none"/>
+  <path d="M152,125 Q166,140 180,125" stroke="#B8956A" stroke-width="3" fill="none"/>
+  
+  <!-- Nose -->
+  <path d="M128,100 Q135,130 128,155 Q145,165 148,158 Q140,150 138,100 Z" fill="#C89B7B"/>
+  <path d="M128,105 Q132,135 128,155" stroke="#B8956A" stroke-width="2" fill="none"/>
+  
+  <!-- Nostrils -->
+  <ellipse cx="118" cy="158" rx="7" ry="5" fill="#6D4C2F" transform="rotate(15 118 158)"/>
+  <ellipse cx="138" cy="158" rx="7" ry="5" fill="#6D4C2F" transform="rotate(-15 138 158)"/>
+  
+  <!-- Nasolabial folds -->
+  <path d="M105,145 Q95,170 100,195" stroke="#C89B7B" stroke-width="2" fill="none"/>
+  <path d="M151,145 Q161,170 156,195" stroke="#C89B7B" stroke-width="2" fill="none"/>
+  
+  <!-- Smirk -->
+  <path d="M85,188 Q128,205 175,185" stroke="#8B5A5A" stroke-width="3" fill="none"/>
+  
+  <!-- Upper lip -->
+  <path d="M95,185 Q128,178 161,185 Q128,192 95,185" fill="#C08070"/>
+  
+  <!-- Teeth -->
+  <rect x="103" y="190" width="50" height="12" fill="#f5f5e8"/>
+  <g stroke="#ddd" stroke-width="1">
+    <line x1="110" y1="190" x2="110" y2="202"/>
+    <line x1="117" y1="190" x2="117" y2="202"/>
+    <line x1="124" y1="190" x2="124" y2="202"/>
+    <line x1="131" y1="190" x2="131" y2="202"/>
+    <line x1="138" y1="190" x2="138" y2="202"/>
+    <line x1="145" y1="190" x2="145" y2="202"/>
+  </g>
+  
+  <!-- Lower lip -->
+  <path d="M98,202 Q128,215 158,202 Q128,208 98,202" fill="#C08070"/>
+  
+  <!-- Chin -->
+  <ellipse cx="128" cy="235" rx="35" ry="25" fill="#C89B7B"/>
+  
+  <!-- 5 o'clock shadow -->
+  <path d="M83,205 Q128,260 173,205" fill="rgba(40,40,40,0.15)"/>
+  
+  <!-- Ears -->
+  <ellipse cx="35" cy="130" rx="15" ry="25" fill="#D4A574"/>
+  <ellipse cx="221" cy="130" rx="15" ry="25" fill="#D4A574"/>
+  <path d="M27,115 Q35,130 27,145" stroke="#C89B7B" stroke-width="2" fill="none"/>
+  <path d="M229,115 Q221,130 229,145" stroke="#C89B7B" stroke-width="2" fill="none"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="64" viewBox="0 0 128 64">
+  <rect width="128" height="64" fill="#8B4513"/>
+  <rect x="8" y="8" width="112" height="48" fill="#d4a574"/>
+  <text x="64" y="25" font-family="Courier" font-size="12" font-weight="bold" fill="#1a1a1a" text-anchor="middle">FLIGHT LOG</text>
+  <text x="64" y="40" font-family="Courier" font-size="10" fill="#1a1a1a" text-anchor="middle">N909JE</text>
+  <text x="64" y="52" font-family="Arial" font-size="10" font-weight="bold" fill="#c41e3a" text-anchor="middle">[REDACTED]</text>
+</svg>
